@@ -3,7 +3,7 @@ package it.unicam.cs.asdl2122.mp1;
 import java.util.*;
 
 /**
- * La classe utilizza una {@link HashMap} per memorizzare gli elementi senza occupare
+ * La classe utilizza una {@link HashMap} per salvare gli elementi senza occupare
  * altro spazio ad ogni nuova occorrenza. La mappa memorizza l'elemento come chiave
  * e il numero di occorrenze come valore, in questo modo è facile effettuare tutte le
  * operazioni sulle occorrenze.
@@ -13,13 +13,13 @@ import java.util.*;
  *
  * @param <E> il tipo degli elementi del multiset
  */
-@SuppressWarnings({"SuspiciousMethodCalls", "ConstantConditions", "FieldMayBeFinal"})
+@SuppressWarnings({"SuspiciousMethodCalls", "ConstantConditions"})
 public class MyMultiset<E> implements Multiset<E> {
 
     /**
-     * La mappa chiave-valore che contiene gli elementi del multiset
+     * La {@link Map} che contiene gli elementi del multiset
      */
-    private Map<E, Integer> elementsMap;
+    private final Map<E, Integer> elementsMap;
     /**
      * La dimensione del multiset, considerando tutte le occorrenze
      */
@@ -62,6 +62,7 @@ public class MyMultiset<E> implements Multiset<E> {
 
         // Il metodo getOrDefault ritorna 0 se l'elemento non esiste (altrimenti sarebbe null)
         Integer previousOccurrences = elementsMap.getOrDefault(element, 0);
+
         if (occurrences < 0 || previousOccurrences + (long) occurrences > Integer.MAX_VALUE)
             throw new IllegalArgumentException("Trying to add an invalid number of elements");
 
@@ -88,7 +89,7 @@ public class MyMultiset<E> implements Multiset<E> {
         if (!contains(element))
             return 0;
 
-        // L'elemento è presente, quindi non c'è il rischio di avere null con il get
+        // L'elemento è presente, quindi non serve utilizzare getOrDefault per evitare il null
         Integer previousOccurrences = elementsMap.get(element);
         if (occurrences == 0)
             return previousOccurrences; // Nessuna modifica
@@ -122,9 +123,9 @@ public class MyMultiset<E> implements Multiset<E> {
             throw new IllegalArgumentException("Trying to set a negative number of elements");
 
         Integer integerCount = elementsMap.put(element, count);
-        // integerCount è null se l'elemento non esisteva
+        // integerCount è null se l'elemento non esisteva, quindi va usata una variabile int
         int previousCount = integerCount == null ? 0 : integerCount;
-        size += count - previousCount; // La differenza può essere negativa
+        size += count - previousCount; // La differenza può essere negativa per ridurre la size
         if (previousCount != count)
             modCount++; // Il multiset cambia solo se il nuovo count è diverso
         return previousCount;
