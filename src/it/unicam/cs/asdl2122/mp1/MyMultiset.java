@@ -201,7 +201,7 @@ public class MyMultiset<E> implements Multiset<E> {
     public int hashCode() {
         int hash = 0;
         for (Iterator<E> iterator = iterator(); iterator.hasNext();) {
-            hash += iterator().next().hashCode();
+            hash += 31 * iterator().next().hashCode();
         }
         return hash;
     }
