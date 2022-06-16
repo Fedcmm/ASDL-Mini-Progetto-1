@@ -118,8 +118,6 @@ public class MyIntLinkedListDisjointSetElement implements DisjointSetElement {
                 return false;
         } else if (this.representative != other.representative)
             return false;
-        if (this.value != other.value)
-            return false;
-        return true;
+        return this.value == other.value;
     }
 }

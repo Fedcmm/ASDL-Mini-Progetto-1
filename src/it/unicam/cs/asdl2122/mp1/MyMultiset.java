@@ -13,7 +13,7 @@ import java.util.*;
  *
  * @param <E> il tipo degli elementi del multiset
  */
-@SuppressWarnings({"SuspiciousMethodCalls", "ConstantConditions"})
+@SuppressWarnings({"SuspiciousMethodCalls"})
 public class MyMultiset<E> implements Multiset<E> {
 
     /**
@@ -25,7 +25,7 @@ public class MyMultiset<E> implements Multiset<E> {
      */
     private int size;
     /**
-     * Contatore delle modifiche al multiset necessario perché l'iteratore
+     * Contatore delle modifiche al multiset, necessario perché l'iteratore
      * sia fail-fast
      */
     private int modCount;
